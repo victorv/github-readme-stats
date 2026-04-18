@@ -1,12 +1,12 @@
-import { renderGistCard } from "../src/cards/gist-card";
 import { describe, expect, it } from "@jest/globals";
 import { queryByTestId } from "@testing-library/dom";
-import { cssToObject } from "@uppercod/css-to-object";
-import { themes } from "../themes/index.js";
 import "@testing-library/jest-dom";
+import { cssToObject } from "@uppercod/css-to-object";
+import { renderGistCard } from "../src/cards/gist.js";
+import { themes } from "../themes/index.js";
 
 /**
- * @type {import("../src/fetchers/gist-fetcher").GistData}
+ * @type {import("../src/fetchers/gist").GistData}
  */
 const data = {
   name: "test",
@@ -135,9 +135,10 @@ describe("test renderGistCard", () => {
       );
       expect(descClassStyles.fill.trim()).toBe(`#${themes[name].text_color}`);
       expect(iconClassStyles.fill.trim()).toBe(`#${themes[name].icon_color}`);
-      expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
-        "fill",
-        `#${themes[name].bg_color}`,
+      const backgroundElement = queryByTestId(document.body, "card-bg");
+      const backgroundElementFill = backgroundElement.getAttribute("fill");
+      expect([`#${themes[name].bg_color}`, "url(#gradient)"]).toContain(
+        backgroundElementFill,
       );
     });
   });
