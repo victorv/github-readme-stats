@@ -13,5 +13,5 @@ vercel_token
 !.vscode/settings.json
 *.code-workspace
 
-.vercel
+.DS_Store
 .env*.local
